@@ -1,0 +1,26 @@
+{
+  "name": "editor",
+  "description": "",
+  "main": "server.js",
+  "authors": [
+    "ujjwal <ujjwal25993@live.com>"
+  ],
+  "license": "ISC",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "^1.6.5",
+    "angular-base64-upload": "^0.1.22",
+    "bootstrap": "^3.3.7",
+    "components-font-awesome": "^4.7.0",
+    "angular-resource": "^1.6.5",
+    "angular-toastr": "^2.1.1",
+    "fabric.js": "fabric#^1.7.17"
+  }
+}

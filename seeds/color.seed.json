@@ -1,0 +1,36 @@
+[{
+	"name" : "white",
+	"code" : "#ffffff"
+},
+{
+	"name" : "Dark Heather",
+	"code" : "#616161"
+},
+{
+	"name" : "Gray",
+	"code" : "#f0f0f0"
+},
+{
+	"name" : "Charcoal",
+	"code" : "#5b5b5b"
+},
+{
+	"name" : "Charcoal",
+	"code" : "#222222"
+},
+{
+	"name" : "Heather Orange",
+	"code" : "#fc8d74"
+},
+{
+	"name" : "Heather Dark Chocolate",
+	"code" : "#432d26"
+},
+{
+	"name" : "Salmon",
+	"code" : "#eead91"
+},
+{
+	"name" : "Chesnut",
+	"code" : "#806355"
+}]

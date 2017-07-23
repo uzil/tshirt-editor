@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en" data-ng-app="tshirt">
+  <head>
+    <meta charset="utf-8">
+    <title>Title</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- styles -->
+    <link href="components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="components/components-font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="css/main.css" rel="stylesheet">
+    <link href="components/angular-toastr/dist/angular-toastr.css" rel="stylesheet">
+	 
+	 <!--dependency scripts-->
+	 <script src="components/angular/angular.min.js"></script>
+	 <script src="components/angular-base64-upload/src/angular-base64-upload.js"></script>
+	 <script src="components/angular-resource/angular-resource.min.js"></script>
+	 <script src="components/angular-toastr/dist/angular-toastr.tpls.js"></script>
+	 <script src="components/fabric.js/dist/fabric.min.js"></script>
+	 <!--<script src="//cdnjs.cloudflare.com/ajax/libs/fabric.js/1.4.8/fabric.min.js"></script>-->
+	 
+	 <!--angular scripts-->
+	 <script src="app/modules/fabric.js"></script>
+	 <script src="app/modules/fabricCanvas.js"></script>
+	 <script src="app/modules/fabricConstants.js"></script>
+	 <script src="app/modules/fabricDirective.js"></script>
+	 <script src="app/modules/fabricDirtyStatus.js"></script>
+	 <script src="app/modules/fabricUtilities.js"></script>
+	 <script src="app/modules/fabricWindow.js"></script>
+	 
+	 <script src="app/main.js"></script>
+	 <script src="app/services/color.service.js"></script>
+	 <script src="app/services/canvas.service.js"></script>
+	 <script src="app/services/tshirt.service.js"></script>
+	 <script src="app/controllers/main.controller.js"></script>
+	 
+  </head>
+
+  <body data-ng-controller="mainController as mainCtrl">
+		
+		<div id="loadingDiv" data-ng-show="{{mainCtrl.loading.color || mainCtrl.loading.apparels}}">
+			<div><i class="fa fa-spinner fa-spin fa-5x fa-fw" aria-hidden="true"></i></div>
+		</div>
+		<div class="container">
+				<hr />
+				<div class="page-header">
+		    	<h1>T-Shirt Editor</h1>
+		  	</div>
+				<div class="row-fluid">
+		
+		    <div class="col-md-3">
+					<div id="exTab1">
+						
+						<ul class="nav nav-tabs nav-justified">
+							<li class="active"><a href="#tab1" data-toggle="tab">Style</a></li>
+							<li><a href="#tab2" data-toggle="tab">Text/Image</a></li>
+						</ul>
+
+						<div class="tab-content">
+							<div class="tab-pane active" id="tab1">
+								<div>
+									<p>Style & Design</p>
+									<select
+										id="item-options-dropdown"
+										class="form-select-menu" 
+										data-ng-options="apparel.name for apparel in mainCtrl.apparels track by apparel.id"
+										data-ng-model="mainCtrl.pageElem.selectedApparel"
+										ng-change="mainCtrl.selectApparel()">
+									</select>
+								</div>
+								<div>
+									<ul>
+										<li 
+											class="color-preview"
+											data-ng-repeat="color in mainCtrl.colors track by $index" 
+											data-ng-style="myColor={'background-color': color}"
+											data-ng-click="mainCtrl.selectColor(color)"></li>
+									</ul>
+								</div>
+							</div>
+
+							<div class="tab-pane" id="tab2">
+								<p>Enter text </p>
+								<div class="input-append">
+									<input 
+										id="text-string" 
+										type="text" 
+										placeholder="Add your text here" 
+										data-ng-model="mainCtrl.pageElem.canvasText"
+										data-ng-change="mainCtrl.textChange()"
+										data-ng-blur="mainCtrl.clearActive()"/>
+								</div>
+								<div class="divider"><span>Or</span></div>
+								<div>
+									<label class="btn btn-block btn-primary btn-file">
+										<span class="upload-text">Add Image</span>
+										<input type="file" data-ng-model="mainCtrl.pageElem.img" base-sixty-four-input onload="mainCtrl.onImgUpload"/>
+									</label>
+								</div>
+								<br />
+							</div>
+						</div>
+
+					</div>
+		    </div>
+		
+		    <div class="col-md-6">
+					<div align="center" style="min-height: 32px;">
+						<div class="clearfix">
+							<div class="btn-group inline pull-left" id="texteditor" style="display:block">
+								<button id="font-family" class="btn btn-default" data-toggle="dropdown" title="Font Style"><i class="fa fa-font"></i></button>
+								<ul class="dropdown-menu" role="menu" aria-labelledby="font-family-X">
+									<li><a tabindex="-1" href="#" data-ng-click="mainCtrl.fabric.setFontFamily('Arial');" class="Arial">Arial</a></li>
+									<li><a tabindex="-1" href="#" data-ng-click="mainCtrl.fabric.setFontFamily('Helvetica');" class="Helvetica">Helvetica</a></li>
+									<li><a tabindex="-1" href="#" data-ng-click="mainCtrl.fabric.setFontFamily('Myriad Pro');" class="MyriadPro">Myriad Pro</a></li>
+									<li><a tabindex="-1" href="#" data-ng-click="mainCtrl.fabric.setFontFamily('Delicious');" class="Delicious">Delicious</a></li>
+									<li><a tabindex="-1" href="#" data-ng-click="mainCtrl.fabric.setFontFamily('Verdana');" class="Verdana">Verdana</a></li>
+									<li><a tabindex="-1" href="#" data-ng-click="mainCtrl.fabric.setFontFamily('Georgia');" class="Georgia">Georgia</a></li>
+									<li><a tabindex="-1" href="#" data-ng-click="mainCtrl.fabric.setFontFamily('Courier');" class="Courier">Courier</a></li>
+									<li><a tabindex="-1" href="#" data-ng-click="mainCtrl.fabric.setFontFamily('Comic Sans MS');" class="ComicSansMS">Comic Sans MS</a></li>
+									<li><a tabindex="-1" href="#" data-ng-click="mainCtrl.fabric.setFontFamily('Impact');" class="Impact">Impact</a></li>
+									<li><a tabindex="-1" href="#" data-ng-click="mainCtrl.fabric.setFontFamily('Monaco');" class="Monaco">Monaco</a></li>
+									<li><a tabindex="-1" href="#" data-ng-click="mainCtrl.fabric.setFontFamily('Optima');" class="Optima">Optima</a></li>
+									<li><a tabindex="-1" href="#" data-ng-click="mainCtrl.fabric.setFontFamily('Hoefler Text');" class="Hoefler Text">Hoefler Text</a></li>
+									<li><a tabindex="-1" href="#" data-ng-click="mainCtrl.fabric.setFontFamily('Plaster');" class="Plaster">Plaster</a></li>
+									<li><a tabindex="-1" href="#" data-ng-click="mainCtrl.fabric.setFontFamily('Engagement');" class="Engagement">Engagement</a></li>
+								</ul>
+
+								<button id="text-bold" class="btn btn-default" title="Bold" data-ng-click="mainCtrl.fabric.toggleBold()"><i class="fa fa-bold"></i></button>
+								<button id="text-italic" class="btn btn-default" title="Italic" data-ng-click="mainCtrl.fabric.toggleItalic()"><i class="fa fa-italic"></i></button>
+								<button id="text-strike" class="btn btn-default" title="Strike" data-ng-click="mainCtrl.fabric.toggleLinethrough()"><i class="fa fa-strikethrough"></i></button>
+								<button id="text-underline" class="btn btn-default" title="Underline" data-ng-click="mainCtrl.fabric.toggleUnderline()"><i class="fa fa-underline"></i></button>
+								
+							</div>
+
+							<div class="pull-right" align="" id="imageeditor" style="display:block">
+								<div class="btn-group">										      
+										<button id="remove-selected" class="btn btn-default" title="Delete selected item" data-ng-click="mainCtrl.fabric.deleteActiveObject()"><i class="fa fa-trash-o"></i></button>
+								</div>
+							</div>
+						</div>
+
+						<div id="shirtDiv" 
+							class="page" 
+							style="width: 530px; height: 630px; position: relative;"
+							data-ng-style="tshirtStyle={'background-color': mainCtrl.pageElem.selectedColor}">
+							<img id="tshirtFacing"  data-ng-src="{{mainCtrl.pageElem.selectedApparel.img}}"></img>
+							<div id="drawingArea" style="position: absolute;top: 100px;left: 160px;z-index: 10;width: 200px;height: 400px;">					
+								<div class='fabric-container'>
+									<canvas id="tcanvas" width=200 height="400" class="hover" fabric="mainCtrl.fabric"></canvas>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+		
+		    <div class="col-md-3">
+		      <div class="well">
+						<input type="text" id="item-options-dropdown" placeholder="Enter style name" data-ng-model="mainCtrl.pageElem.styleTitle"/>
+						<hr />
+						<div data-ng-if="!mainCtrl.savedCanvas">
+							<p>Email</p>
+							<span>
+								<input type="text" id="item-options-dropdown" data-ng-model="mainCtrl.pageElem.email" />
+							</span>
+							<center><button class="btn btn-default" data-ng-click="mainCtrl.loadSavedCanvas()">Load Earlier Entries</button></center>
+						</div>
+						<div data-ng-if="mainCtrl.savedCanvas">
+							<center><p data-ng-hide="mainCtrl.savedCanvas.length">You have no saved designs<p></center>
+							<div data-ng-show="mainCtrl.savedCanvas.length">
+								<span>Your saved designs:</span>
+								<select 
+									id="item-options-dropdown"
+									data-ng-options="design.title for design in mainCtrl.savedCanvas track by design._id"
+									data-ng-model="mainCtrl.pageElem.selectedDesign"
+									data-ng-change="mainCtrl.loadCanvas(mainCtrl.pageElem.selectedDesign)">
+									<option selected="selected">Select a design</option>
+								</select>
+							</div>
+						</div>
+						<div data-ng-if="mainCtrl.pageElem.canvasHistory.length">
+							<hr />
+							<span><b>History:</b></span>
+							<div>
+								<div ng-repeat="history in mainCtrl.pageElem.canvasHistory | limitTo:mainCtrl.pageElem.historyLimit">
+									<div><i>{{history.createdAt}}<i><button data-ng-click="mainCtrl.loadCanvas(history)"><i class="fa fa-plus-circle" aria-hidden="true"></i></button></div>
+								</div>
+							</div>
+						</div>
+					</div>
+		    </div>
+		</div>
+    
+<!-- Footer ================================================== -->
+      <footer class="footer navbar navbar-fixed-bottom">      
+      	<div class="container">
+					<div class="pull-left"><a href="#" data-ng-click="mainCtrl.save()"><p class="btmn btmn-dark-blue">Save</p></a></div>
+	        <p class="pull-right"><a href="#">Back to top</a></p>
+	        <p></p>       
+	      </div>       
+    </footer>
+
+    <script src="components/jquery/dist/jquery.min.js"></script>
+    <script src="components/bootstrap/dist/js/bootstrap.min.js"></script>
+  </body>
+</html>
