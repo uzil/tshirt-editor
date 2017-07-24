@@ -4,8 +4,15 @@ const services = require('../services/canvas.service');
 const tshirtServices = require('../services/tshirt.service');
 
 const isValidApparel = Promise.coroutine(function *(apparelID) {
+  let id = apparelID;
+  try {
+    id = new ObjectID(id);
+  } catch(error) {
+    throw error;
+  }
+
   const apparel = yield tshirtServices.findOne({
-    _id: new ObjectID(apparelID)
+    _id: id
   });
 
   if (!apparel || !Object.keys(apparel).length) {
