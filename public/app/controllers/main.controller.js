@@ -1,4 +1,4 @@
-(function (angular){
+(function (angular) {
   'use strict';
 
   var app = angular.module('tshirt');
@@ -95,7 +95,7 @@
     }
 
     function selectApparel() {
-      _this.exportData.apparelId = _this.pageElem.selectedApparel.id;
+      _this.exportData.apparelId = _this.pageElem.selectedApparel._id;
     }
 
     function selectColor(colorCode) {
@@ -139,7 +139,7 @@
     }
 
     // load a saved canvas form REST Api
-    function loadSavedCanvas () {
+    function loadSavedCanvas() {
       if(!hasEmail(true)) return false;
 
       _this.exportData.email = _this.pageElem.email;
@@ -212,7 +212,7 @@
       _this.pageElem.canvasText = '';
     }
 
-    function init () {
+    function init() {
       fetchColors();
       fetchApparels();
     }
@@ -222,15 +222,23 @@
     }
 
     function loadCanvas(history) {
-      _this.fabric.clearCanvas();
-      _this.fabric.loadJSON(history.canvasJSON);
-      
-      _this.pageElem.selectedColor = history.colorCode;
-      _this.pageElem.selectedApparel.id = history.apparelId;
-      _this.pageElem.styleTitle = history.title;
+      // first fetch the apparel from db
+      tshirtservice.get({id: history.apparelId}, function (result) {
+        _this.fabric.clearCanvas();
 
-      // after canvas is fully loaded hide the background for user exp
-      _this.fabric.setCanvasBackgroundColor('transparent');
+        // load canvas form json data
+        _this.fabric.loadJSON(history.canvasJSON);
+
+        _this.pageElem.selectedColor = history.colorCode;
+
+        _this.pageElem.selectedApparel = result;
+        _this.pageElem.styleTitle = history.title;
+
+        // after canvas is fully loaded hide the background for user exp
+        _this.fabric.setCanvasBackgroundColor('transparent');
+      }, function () {
+        toastr.error('Unable to fetch that apparel by id', 'Error');
+      })
     }
     
   }]);
