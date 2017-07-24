@@ -103,13 +103,14 @@ Add new tshirt template to database
 Gives list of all the saved canvases by email
 
 `POST` /api/canvases
-Add new tshirt to database
+Add new tshirt  canvas to database
 ```js
 {
   colorCode: 'code',
   apparelId: 'unique tshirt id',
   title: 'name or title of canvas',
   email: 'email of creator',
+  createdAt: 'time of creation',
   canvasJSON: {/** fabric.js canvas json data**/}
 }
 ```
