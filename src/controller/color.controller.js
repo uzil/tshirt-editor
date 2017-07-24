@@ -9,6 +9,7 @@ const create = (req, res, next) => {
     .catch(next);
 };
 
+// get arrays of only color id
 const getAsArray = (req, res, next) => {
   services.findAll({})
     .then(colors => res.status(200).json(colors.map(color => color.code)))

@@ -1,5 +1,10 @@
 'use strict';
 
+/**
+ * default config, it is loaded and available in every
+ * node environment
+ */
+
 const index = {
   unique: {
     unique: true,

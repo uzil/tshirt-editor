@@ -1,5 +1,7 @@
 'use strict';
 
+// js script to add seed data to database
+
 const Promise = require('bluebird');
 const database = require('../src/utils/database');
 

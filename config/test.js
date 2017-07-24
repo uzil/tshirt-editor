@@ -1,5 +1,10 @@
 'use strict';
 
+/**
+ * this config file is only loaded
+ * if node env is test
+ */
+
 module.exports = {
   MONGO: { 
     HOST: process.env.MONGO_HOST || 'localhost',

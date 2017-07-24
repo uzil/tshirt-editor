@@ -1,6 +1,7 @@
 (function (angular) {
   'use strict';
   
+  // define tshirt module and its dependencies
   angular.module('tshirt', [
     'common.fabric',
     'common.fabric.utilities',

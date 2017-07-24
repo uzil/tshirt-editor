@@ -10,6 +10,7 @@ const create = (req, res, next) => {
     .catch(next);
 };
 
+// find all canvas by email
 const findAll = (req, res, next) => {
   const email = req.query.email;
   const conditions = { email }
