@@ -5,13 +5,15 @@
   "main": "server.js",
   "scripts": {
     "seed": "node seeds/seed.js",
-    "start": "node server.js"
+    "start": "node server.js",
+    "postinstall": "bower cache clean && bower install"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "bluebird": "^3.5.0",
     "body-parser": "^1.17.2",
+    "bower": "^1.8.0",
     "cartilage": "^1.0.2",
     "config": "^1.26.1",
     "express": "^4.15.3",

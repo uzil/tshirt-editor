@@ -11,9 +11,10 @@ const Promise = require('bluebird');
 const MongoClient = require('mongodb').MongoClient;
 
 const mongoInfo = config.get('MONGO');
-const mongoConfig = { native_parser: true, promiseLibrary: Promise };
-const mongoUrl = `mongodb://${mongoInfo.HOST}:${mongoInfo.PORT}/${mongoInfo.dbName}`;
+const mongoConfig = { native_parser: false, promiseLibrary: Promise };
+const mongoUrl = process.env.MONGO_URI || `mongodb://${mongoInfo.HOST}:${mongoInfo.PORT}/${mongoInfo.dbName}`;
 
+console.log({mongoUrl});
 // initialisation if function constructor
 function Connection() {
   // by default set connetcted status as false

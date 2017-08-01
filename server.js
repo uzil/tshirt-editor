@@ -5,7 +5,7 @@
 const database = require('./src/utils/database');
 
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
-process.env.NODE_PORT = process.env.NODE_PORT || 3000;
+process.env.NODE_PORT = process.env.PORT || 3000;
 
 console.log(`Using Environment ${process.env.NODE_ENV}`);
 

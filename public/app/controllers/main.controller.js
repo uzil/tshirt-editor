@@ -45,10 +45,7 @@
 
 
     // init page
-    //check for local storage if not there add a blank array
-    if ($window.localStorage.getItem('canvasHistory')) {
-      $window.localStorage.setItem('canvasHistory', JSON.stringify([]));
-    }
+    $window.localStorage.setItem('canvasHistory', JSON.stringify([]));
     
     // initialise fabric vars to use in directive
     _this.fabric = {};
